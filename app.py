@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify, render_template
 import openai
 import os
 
-app = Flask(__name__, static_folder='static', static_url_path='')
+app = Flask(__name__, static_folder='static', static_url_path='/static')
 
 # Load environment variables
 openai.api_key = os.getenv("OPENAI_API_KEY")
@@ -15,10 +15,10 @@ def index():
 def chat():
     data = request.get_json()
     user_message = data.get("message", "")
-    
+
     if not user_message:
         return jsonify({"error": "Message is required"}), 400
-    
+
     try:
         # OpenAI API call
         response = openai.ChatCompletion.create(
